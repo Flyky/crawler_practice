@@ -8,34 +8,24 @@
 --------------------------------------------
 
 '''
+from ganji_houses_Crawler import OptionPanel, URL_Manager, Parser, ResultOutputer
 
 
-class GanjiPanel(object):
-
+class CrawlMain(object):
     def __init__(self) -> None:
         super().__init__()
-        self.city = self.setCity()
-        self.houseType = self.setHouseType()
-        self.deepTimes = self.setDeepTimes()
-        self.fileName = self.setFileName()
+        self.urls = URL_Manager.UrlManager()
+        self.parser = Parser.Parser()
+        self.outputer = ResultOutputer.Outputer()
 
-    @classmethod
-    def getSwitchs(cls):
-        return self.city, self.houseType, self.deepTimes, self.fileName
-
-    def setCity(self):
-        cityTp = input('''-----------------------------------------------
-            Please input the city you would crawl: ''')
-
-    def setHouseType(self):
-        pass
-
-    def setDeepTimes(self):
-        pass
-
-    def setFileName(self):
-        pass
+    def crawling(self, options):
+        if self.urls.isExistCity(options['city']):
+            print('Error! The city "{0}" is not existed.')
+            return
 
 
 if __name__ == '__main__':
-    city, houseType, deepTimes, fileName = GanjiPanel.getSwitchs()
+    #option [city, houseType, deepPages, fileName]
+    options = OptionPanel.getOptions()
+    objCrawler = CrawlMain()
+    objCrawler.crawling(options)
