@@ -8,6 +8,7 @@
 --------------------------------------------
 
 '''
+
 from ganji_houses_Crawler import OptionPanel, URL_Manager, Parser, ResultOutputer
 
 
@@ -19,13 +20,20 @@ class CrawlMain(object):
         self.outputer = ResultOutputer.Outputer()
 
     def crawling(self, options):
-        if self.urls.isExistCity(options['city']):
-            print('Error! The city "{0}" is not existed.')
+        if options['city'] not in self.urls.city_dict:
+            print('Error! City "{0}" is not exists in the website.'.format(options['city']))
             return
+        # url_base = urljoin(self.urls.city_dict[options['city']], options['houseType'])
+        url_base = self.urls.city_dict[options['city']]
+
+        crawling_page = 0
+        end_page = options['deepPages']
+        while crawling_page < end_page:
+            self.parser.parse_page(url_base, options['houseType'], crawling_page)
 
 
 if __name__ == '__main__':
-    #option [city, houseType, deepPages, fileName]
+    # option [city, houseType, deepPages, fileName]
     options = OptionPanel.getOptions()
     objCrawler = CrawlMain()
     objCrawler.crawling(options)

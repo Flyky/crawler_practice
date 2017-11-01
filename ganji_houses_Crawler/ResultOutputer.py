@@ -8,7 +8,11 @@
 --------------------------------------------
 
 '''
+import csv
 
 
 class Outputer(object):
-    pass
+    def output_csv(self, file_name):
+        with open(file_name+'.csv', 'w', encoding = 'utf-8') as f:
+            csv_writer = csv.writer(f, delimiter=',')
+            
